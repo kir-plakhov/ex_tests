@@ -57,12 +57,12 @@ class TestIafCollector:
             query_res = get_non_empty_result_from_ch(clickhouse_with_cleaning_raw_events_table, SELECT_FORM_SEND)
             assert 'form_send' in query_res[0], "Event_type 'form_send' was not found in DB"
 
-        def test_scroll_event(self, driver):
+        def test_scroll_event(self, driver, clickhouse_with_cleaning_raw_events_table):
             test_page = HtmlFirstPage(driver, TEST_STAND_URL)
             test_page.open()
             test_page.scroll_the_page()
-            test_page.get_logs_from_network_tab()
-            assert test_page.check_event_type_in_logs(self.LOG_FILE, 'scroll') is True, "Event_type 'scroll' was not found in DB"
+            query_res = get_non_empty_result_from_ch(clickhouse_with_cleaning_raw_events_table, SELECT_SCROLL)
+            assert 'scroll' in query_res[0], "Event_type 'scroll' was not found in DB"
 
         def test_pa_enter_event(self, driver, clickhouse_with_cleaning_raw_events_table):
             test_page = HtmlFirstPage(driver, DEV_1_STAND_URL)

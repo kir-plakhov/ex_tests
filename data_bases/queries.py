@@ -24,3 +24,6 @@ SELECT_CAF_NAV = "SELECT * FROM iaf.raw_events WHERE event_type = 'caf_nav';"
 
 # Select record from raw_data where event_type is "page_open"
 SELECT_PAGE_OPEN = "SELECT * FROM iaf.raw_events WHERE event_type = 'page_open';"
+
+# Select record from raw_data where event_type is "scroll"
+SELECT_SCROLL = "SELECT event_type FROM iaf.raw_events WHERE event_type = 'scroll';"
