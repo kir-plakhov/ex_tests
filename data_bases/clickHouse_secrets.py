@@ -1,0 +1,5 @@
+HOST = "iaf-ch.test.env"
+PORT = "8123"
+USER = "iaf_rw"
+DB = "iaf"
+PASSWORD = "6YnYr6l9DWATTqpXTynCJOvV5NiZrGPDXygegH3q"
