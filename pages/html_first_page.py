@@ -1,35 +1,47 @@
 import random
-
-from locators.html_page_1_locators import HtmlFirstPageLocators
+from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
 import time
 import json
 
 
 class HtmlFirstPage(BasePage):
-    locators = HtmlFirstPageLocators()
+
+    page_1_button = (By.XPATH, "/html/body/div[1]/nav/ul/li[1]/button")
+    page_2_button = (By.XPATH, "/html/body/div[1]/nav/ul/li[2]/button")
+    login_input = (By.XPATH, "/html/body/div[1]/main/div[1]/form/div[1]/input")
+    password_input = (By.XPATH, "/html/body/div[1]/main/div[1]/form/div[2]/input")
+    radio_button = (By.XPATH, "/html/body/div[1]/main/div[4]/form/div[3]/input[1]")
+    check_box = (By.XPATH, "/html/body/div[1]/main/div[4]/form/div[4]/input[1]")
+    date_picker = (By.XPATH, "/html/body/div[1]/main/div[4]/form/div[6]/input")
+    slider = (By.XPATH, "/html/body/div[1]/main/div[4]/form/div[5]/input")
+    text_area = (By.XPATH, "/html/body/div[1]/main/div[4]/form/div[2]/textarea")
+    submit_button = (By.XPATH, "/html/body/div[1]/main/div[2]/form/button")
+    select = (By.XPATH, "/html/body/div[1]/main/div[4]/form/div[1]/select")
+    iframe_link = (By.XPATH, "/html/body/footer/a")
+    go_to_pa = (By.XPATH, "/html/body/div[1]/main/div[1]/form/button")
 
     def get_event_type(self, element):
         elements = {
-            "login_input": self.locators.LOGIN_INPUT,
-            "password_input": self.locators.PASSWORD_INPUT,
-            "select": self.locators.SELECT,
-            "radio_button": self.locators.RADIO_BUTTON,
-            "check_box": self.locators.CHECK_BOX,
-            "slider": self.locators.SLIDER,
-            "date_picker": self.locators.DATE_PICKER,
-            "page_2_button": self.locators.PAGE_2_BUTTON,
-            "iframe_link": self.locators.IFRAME_LINK,
-            "textarea": self.locators.TEXT_AREA,
-            "submit": self.locators.SUBMIT_BUTTON,
-            "go_to_pa": self.locators.GO_TO_PA
+            "login_input": self.login_input,
+            "password_input": self.password_input,
+            "select": self.select,
+            "radio_button": self.radio_button,
+            "check_box": self.check_box,
+            "slider": self.slider,
+            "date_picker": self.date_picker,
+            "page_2_button": self.page_2_button,
+            "iframe_link": self.iframe_link,
+            "textarea": self.text_area,
+            "submit": self.submit_button,
+            "go_to_pa": self.go_to_pa
         }
         self.element_is_visible(elements[element]).click()
 
     ''' This method allows to get data from Chrome DevTools Network tab '''
     def get_logs_from_network_tab(self):
         # Sleeps for 10 seconds
-        time.sleep(7)
+        time.sleep(10)
         # Enable Performance Logging of Chrome.
 
         logs = self.driver.get_log("performance")
@@ -60,7 +72,7 @@ class HtmlFirstPage(BasePage):
                 return False
 
     def move_slider(self):
-        slider_input = self.element_is_visible(self.locators.SLIDER)
+        slider_input = self.element_is_visible(self.slider)
         self.action_drag_and_drop_by_offset(slider_input, random.randint(25, 50), 0)
 
     def close_tab(self):
@@ -68,9 +80,9 @@ class HtmlFirstPage(BasePage):
         self.driver.close()
 
     def press_submit_button(self):
-        self.element_is_visible(self.locators.SUBMIT_BUTTON).click()
+        self.element_is_visible(self.submit_button).click()
         time.sleep(1)
-        self.element_is_visible(self.locators.SUBMIT_BUTTON).click()
+        self.element_is_visible(self.submit_button).click()
 
     def scroll_the_page(self):
         self.scroll_to_the_bottom()
