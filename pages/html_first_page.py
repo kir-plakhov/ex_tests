@@ -20,6 +20,7 @@ class HtmlFirstPage(BasePage):
     select = (By.XPATH, "/html/body/div[1]/main/div[4]/form/div[1]/select")
     iframe_link = (By.XPATH, "/html/body/footer/a")
     go_to_pa = (By.XPATH, "/html/body/div[1]/main/div[1]/form/button")
+    go_to_google_page = (By.XPATH, "/html/body/div[1]/main/div[1]/ul/li[5]/a")
 
     def get_event_type(self, element):
         elements = {
@@ -86,3 +87,8 @@ class HtmlFirstPage(BasePage):
 
     def scroll_the_page(self):
         self.scroll_to_the_bottom()
+
+    def add_tab(self):
+        self.element_is_visible(self.page_2_button).click()
+        self.element_is_visible(self.go_to_google_page).click()
+        self.driver.switch_to.window(self.driver.window_handles[0])
