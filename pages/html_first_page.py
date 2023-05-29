@@ -7,6 +7,7 @@ import json
 
 class HtmlFirstPage(BasePage):
 
+    # Locators
     page_1_button = (By.XPATH, "/html/body/div[1]/nav/ul/li[1]/button")
     page_2_button = (By.XPATH, "/html/body/div[1]/nav/ul/li[2]/button")
     login_input = (By.XPATH, "/html/body/div[1]/main/div[1]/form/div[1]/input")
@@ -21,6 +22,10 @@ class HtmlFirstPage(BasePage):
     iframe_link = (By.XPATH, "/html/body/footer/a")
     go_to_pa = (By.XPATH, "/html/body/div[1]/main/div[1]/form/button")
     go_to_google_page = (By.XPATH, "/html/body/div[1]/main/div[1]/ul/li[5]/a")
+    ga_id_input = (By.XPATH, "/html/body/div/div[2]/div[1]/li[9]/input")
+
+
+
 
     def get_event_type(self, element):
         elements = {

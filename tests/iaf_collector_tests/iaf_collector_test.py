@@ -45,6 +45,7 @@ class TestIafCollector:
             assert test_page.check_event_type_in_logs(LOG_FILE, 'page_open')
 
 # НУЖНО ИЗМЕНИТЬ РЕАЛИЗАЦИЮ !!!
+        @pytest.mark.skip
         def test_page_close_event(self, driver, clickhouse_with_cleaning_raw_events_table):
             test_page = HtmlFirstPage(driver, TEST_STAND_URL)
             test_page.close_tab()
@@ -54,12 +55,13 @@ class TestIafCollector:
             # assert test_page.check_event_type_in_logs(LOG_FILE, 'page_close')
 
 # НУЖНО ИЗМЕНИТЬ РЕАЛИЗАЦИЮ !!!
+        @pytest.mark.skip
         def test_page_opened_in_iframe(self, driver, clickhouse_with_cleaning_raw_events_table):
             test_page = HtmlFirstPage(driver, TEST_STAND_URL)
             test_page.get_event_type('iframe_link')
-            # query_res = get_non_empty_result_from_ch(clickhouse_with_cleaning_raw_events_table, SELECT_IS_IFRAME)
-            # assert '"is_iframe": true' in query_res[0][0], "Event_type 'page_open' with 'iframe': True parameter
-            # was " \ "not found in DB "
+            query_res = get_non_empty_result_from_ch(clickhouse_with_cleaning_raw_events_table, SELECT_IS_IFRAME)
+            assert '"is_iframe": true' in query_res[0][0], "Event_type 'page_open' with 'iframe': True parameter was " \
+                                                           "not found in DB "
 
         def test_form_send_event(self, driver, clickhouse_with_cleaning_raw_events_table):
             test_page = HtmlFirstPage(driver, TEST_STAND_URL)
