@@ -8,10 +8,11 @@ TRUNCATE_RULE_RESULTS = "truncate table iaf.rule_results on cluster cluster_iaf;
 SELECT_PAGE_CLOSE = "SELECT * FROM iaf.raw_events WHERE event_type = 'page_close';"
 
 # Select record from raw_data
-SELECT_IS_IFRAME = "SELECT unstructured_data FROM iaf.raw_events WHERE event_type = 'page_open';"
+SELECT_IS_IFRAME = "SELECT unstructured_data FROM iaf.raw_events WHERE event_type = 'page_open' AND 'ga_id' = '000000000.1111111111';"
 
 # Select record from raw_data where event_type is "pa_enter"
-SELECT_PA_ENTER = "SELECT * FROM iaf.raw_events WHERE event_type = 'pa_enter';"
+SELECT_PA_ENTER = "SELECT * FROM iaf.raw_events WHERE referrer_url = 'http://iaf-collector-dev-1.test.env/' AND " \
+                  "event_type = 'pa_enter'; "
 
 # Select record from raw_data where event_type is "form_send"
 SELECT_FORM_SEND = "SELECT * FROM iaf.raw_events WHERE event_type = 'form_send';"

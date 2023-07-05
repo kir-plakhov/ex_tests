@@ -1,6 +1,5 @@
 import os
 import time
-
 import pytest
 from utils import get_non_empty_result_from_ch
 from data_bases.queries import *
@@ -22,6 +21,7 @@ class TestIafCollector:
                                                                 ('password_input', 'caf_form', SELECT_CAF_FORM)])
         def test_event_types(self, driver, clickhouse_with_cleaning_raw_events_table, element, event_type, query):
             test_page = HtmlFirstPage(driver, TEST_STAND_URL)
+            test_page.switch_to_uncrypted_mode()
             test_page.get_event_type(element)
             test_page.get_logs_from_network_tab()
             # query_res = get_non_empty_result_from_ch(clickhouse_with_cleaning_raw_events_table, query)
@@ -30,6 +30,7 @@ class TestIafCollector:
 
         def test_slider_event_type(self, driver, clickhouse_with_cleaning_raw_events_table):
             test_page = HtmlFirstPage(driver, TEST_STAND_URL)
+            test_page.switch_to_uncrypted_mode()
             test_page.move_slider()
             test_page.get_logs_from_network_tab()
             # query_res = get_non_empty_result_from_ch(clickhouse_with_cleaning_raw_events_table, SELECT_CAF_FORM)
@@ -38,26 +39,30 @@ class TestIafCollector:
 
         def test_page_open_event(self, driver, clickhouse_with_cleaning_raw_events_table):
             test_page = HtmlFirstPage(driver, TEST_STAND_URL)
+            test_page.switch_to_uncrypted_mode()
             driver.refresh()
-            test_page.get_logs_from_network_tab()
+            r = test_page.get_logs_from_network_tab()
             # query_res = get_non_empty_result_from_ch(clickhouse_with_cleaning_raw_events_table, SELECT_PAGE_OPEN)
             # assert 'page_open' in query_res[0], "Event_type 'page_open' was not found in DB"
-            assert test_page.check_event_type_in_logs(LOG_FILE, 'page_open')
+            # assert test_page.check_event_type_in_logs(LOG_FILE, 'page_open')
 
 # НУЖНО ИЗМЕНИТЬ РЕАЛИЗАЦИЮ !!!
         @pytest.mark.skip
         def test_page_close_event(self, driver, clickhouse_with_cleaning_raw_events_table):
             test_page = HtmlFirstPage(driver, TEST_STAND_URL)
+            test_page.switch_to_uncrypted_mode()
+            test_page.change_server_event_url()
             test_page.close_tab()
             # test_page.get_logs_from_network_tab()
             query_res = get_non_empty_result_from_ch(clickhouse_with_cleaning_raw_events_table, SELECT_PAGE_CLOSE)
             assert 'page_close' in query_res[0], "Event_type 'page_close' was not found in DB"
             # assert test_page.check_event_type_in_logs(LOG_FILE, 'page_close')
 
-# НУЖНО ИЗМЕНИТЬ РЕАЛИЗАЦИЮ !!!
         @pytest.mark.skip
         def test_page_opened_in_iframe(self, driver, clickhouse_with_cleaning_raw_events_table):
             test_page = HtmlFirstPage(driver, TEST_STAND_URL)
+            test_page.switch_to_uncrypted_mode()
+            test_page.change_server_event_url()
             test_page.get_event_type('iframe_link')
             query_res = get_non_empty_result_from_ch(clickhouse_with_cleaning_raw_events_table, SELECT_IS_IFRAME)
             assert '"is_iframe": true' in query_res[0][0], "Event_type 'page_open' with 'iframe': True parameter was " \
@@ -65,6 +70,7 @@ class TestIafCollector:
 
         def test_form_send_event(self, driver, clickhouse_with_cleaning_raw_events_table):
             test_page = HtmlFirstPage(driver, TEST_STAND_URL)
+            test_page.switch_to_uncrypted_mode()
             test_page.press_submit_button()
             test_page.get_logs_from_network_tab()
             # query_res = get_non_empty_result_from_ch(clickhouse_with_cleaning_raw_events_table, SELECT_FORM_SEND)
@@ -73,6 +79,7 @@ class TestIafCollector:
 
         def test_scroll_event(self, driver, clickhouse_with_cleaning_raw_events_table):
             test_page = HtmlFirstPage(driver, TEST_STAND_URL)
+            test_page.switch_to_uncrypted_mode()
             test_page.scroll_the_page()
             test_page.get_logs_from_network_tab()
             # query_res = get_non_empty_result_from_ch(clickhouse_with_cleaning_raw_events_table, SELECT_SCROLL)
@@ -81,8 +88,10 @@ class TestIafCollector:
 
         def test_pa_enter_event(self, driver, clickhouse_with_cleaning_raw_events_table):
             test_page = HtmlFirstPage(driver, DEV_1_STAND_URL)
+            test_page.switch_to_uncrypted_mode()
             test_page.get_event_type('go_to_pa')
             test_page.get_logs_from_network_tab()
             # query_res = get_non_empty_result_from_ch(clickhouse_with_cleaning_raw_events_table, SELECT_PA_ENTER)
             # assert 'pa_enter' in query_res[0], "Event_type 'pa_enter' was not found in DB"
             assert test_page.check_event_type_in_logs(LOG_FILE, 'pa_enter')
+

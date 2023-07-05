@@ -36,9 +36,9 @@ def clickhouse_with_cleaning_raw_events_table():
             user=USER,
             password=PASSWORD,
     ) as client:
-        client.execute(TRUNCATE_RAW_EVENTS)
+        #client.execute(TRUNCATE_RAW_EVENTS)
         yield client
-        client.execute(TRUNCATE_RAW_EVENTS)
+        #client.execute(TRUNCATE_RAW_EVENTS)
 
 
 @pytest.fixture(scope="function")
