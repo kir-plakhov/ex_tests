@@ -53,32 +53,6 @@ class HtmlFirstPage(BasePage):
         }
         self.element_is_visible(elements[element]).click()
 
-    ''' This method allows to get data from Chrome DevTools Network tab '''
-
-    def get_logs_from_network_tab(self):
-        # Sleeps for 10 seconds
-        time.sleep(10)
-        # Enable Performance Logging of Chrome.
-
-        logs = self.driver.get_log("performance")
-
-        # Opens a writable JSON file and writes the logs in it
-        with open("network_log.json", "w", encoding="utf-8") as f:
-            f.write("[")
-
-            # Iterates every logs and parses it using JSON
-            for log in logs:
-                network_log = json.loads(log["message"])["message"]
-
-                # Checks if the current 'method' key has any
-                # Network related value.
-                if "Network.request" in network_log["method"]:
-                    # Writes the network log to a JSON file by
-                    # converting the dictionary to a JSON string
-                    # using json.dumps().
-                    f.write(json.dumps(network_log) + ",")
-            f.write("{}]")
-
     @staticmethod
     def check_event_type_in_logs(file_path, event_type):
         with open(file_path, "rb") as source:
@@ -124,4 +98,3 @@ class HtmlFirstPage(BasePage):
     def prepare_test_env(self):
         self.switch_to_uncrypted_mode()
         self.change_server_event_url()
-

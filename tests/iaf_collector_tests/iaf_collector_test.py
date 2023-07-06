@@ -1,7 +1,7 @@
 import os
 import time
 import pytest
-from utils import get_non_empty_result_from_ch
+from utils import get_non_empty_result_from_ch, get_logs_from_network_tab
 from data_bases.queries import *
 from pages.html_first_page import HtmlFirstPage
 from constants import *
@@ -20,29 +20,30 @@ class TestIafCollector:
                                                                 ('login_input', 'caf_form', SELECT_CAF_FORM),
                                                                 ('password_input', 'caf_form', SELECT_CAF_FORM)])
         def test_event_types(self, driver, clickhouse_with_cleaning_raw_events_table, element, event_type, query):
-            test_page = HtmlFirstPage(driver, TEST_STAND_URL)
+            test_page = HtmlFirstPage(driver, DEV_2_STAND_URL)
             test_page.switch_to_uncrypted_mode()
             test_page.get_event_type(element)
-            test_page.get_logs_from_network_tab()
-            assert test_page.check_event_type_in_logs(LOG_FILE, f'{event_type}')
+            get_logs_from_network_tab(driver)
+            assert test_page.check_event_type_in_logs(LOG_FILE, f'{event_type}'), f'{event_type} has not been found in LOG_FILE'
 
         def test_slider_event_type(self, driver, clickhouse_with_cleaning_raw_events_table):
-            test_page = HtmlFirstPage(driver, TEST_STAND_URL)
+            test_page = HtmlFirstPage(driver, DEV_2_STAND_URL)
             test_page.switch_to_uncrypted_mode()
             test_page.move_slider()
-            test_page.get_logs_from_network_tab()
-            assert test_page.check_event_type_in_logs(LOG_FILE, 'caf_form')
+            get_logs_from_network_tab(driver)
+            assert test_page.check_event_type_in_logs(LOG_FILE, 'caf_form'), 'caf_form event_type has not been found in LOG_FILE'
 
         def test_page_open_event(self, driver, clickhouse_with_cleaning_raw_events_table):
-            test_page = HtmlFirstPage(driver, TEST_STAND_URL)
+            test_page = HtmlFirstPage(driver, DEV_2_STAND_URL)
             test_page.switch_to_uncrypted_mode()
             driver.refresh()
-            assert test_page.check_event_type_in_logs(LOG_FILE, 'page_open')
+            get_logs_from_network_tab(driver)
+            assert test_page.check_event_type_in_logs(LOG_FILE, 'page_open'), 'page_open event_type has not been found in LOG_FILE'
 
 # НУЖНО ИЗМЕНИТЬ РЕАЛИЗАЦИЮ !!!
         @pytest.mark.skip
         def test_page_close_event(self, driver, clickhouse_with_cleaning_raw_events_table):
-            test_page = HtmlFirstPage(driver, TEST_STAND_URL)
+            test_page = HtmlFirstPage(driver, DEV_2_STAND_URL)
             test_page.switch_to_uncrypted_mode()
             test_page.change_server_event_url()
             test_page.close_tab()
@@ -51,7 +52,7 @@ class TestIafCollector:
 
         @pytest.mark.skip
         def test_page_opened_in_iframe(self, driver, clickhouse_with_cleaning_raw_events_table):
-            test_page = HtmlFirstPage(driver, TEST_STAND_URL)
+            test_page = HtmlFirstPage(driver, DEV_2_STAND_URL)
             test_page.switch_to_uncrypted_mode()
             test_page.change_server_event_url()
             test_page.get_event_type('iframe_link')
@@ -60,23 +61,23 @@ class TestIafCollector:
                                                            "not found in DB "
 
         def test_form_send_event(self, driver, clickhouse_with_cleaning_raw_events_table):
-            test_page = HtmlFirstPage(driver, TEST_STAND_URL)
+            test_page = HtmlFirstPage(driver, DEV_2_STAND_URL)
             test_page.switch_to_uncrypted_mode()
             test_page.press_submit_button()
-            test_page.get_logs_from_network_tab()
-            assert test_page.check_event_type_in_logs(LOG_FILE, 'form_send')
+            get_logs_from_network_tab(driver)
+            assert test_page.check_event_type_in_logs(LOG_FILE, 'form_send'), 'form_send event_type has not been found in LOG_FILE'
 
         def test_scroll_event(self, driver, clickhouse_with_cleaning_raw_events_table):
-            test_page = HtmlFirstPage(driver, TEST_STAND_URL)
+            test_page = HtmlFirstPage(driver, DEV_2_STAND_URL)
             test_page.switch_to_uncrypted_mode()
             test_page.scroll_the_page()
-            test_page.get_logs_from_network_tab()
-            assert test_page.check_event_type_in_logs(LOG_FILE, 'scroll')
+            get_logs_from_network_tab(driver)
+            assert test_page.check_event_type_in_logs(LOG_FILE, 'scroll'), 'scroll event_type has not been found in LOG_FILE'
 
         def test_pa_enter_event(self, driver, clickhouse_with_cleaning_raw_events_table):
-            test_page = HtmlFirstPage(driver, DEV_1_STAND_URL)
+            test_page = HtmlFirstPage(driver, DEV_2_STAND_URL)
             test_page.switch_to_uncrypted_mode()
             test_page.get_event_type('go_to_pa')
-            test_page.get_logs_from_network_tab()
-            assert test_page.check_event_type_in_logs(LOG_FILE, 'pa_enter')
+            get_logs_from_network_tab(driver)
+            assert test_page.check_event_type_in_logs(LOG_FILE, 'pa_enter'), 'pa_enter event_type has not been found in LOG_FILE'
 
