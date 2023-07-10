@@ -44,7 +44,10 @@ class IAFSourceMessage(BaseModel): # ValidationMixin,
     event_timestamp: NonNegativeInt = Field(alias='server_timestamp')
     client_timestamp: NonNegativeInt = Field(alias='timestamp')
     unstructured_data: dict = Field(default_factory=dict)
+    location: str = Field(default='Europe/Minsk')
+    language: str = Field(default='en')
 
 
 class Config:
     allow_population_by_field_name = True
+
