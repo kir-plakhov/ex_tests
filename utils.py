@@ -11,10 +11,8 @@ def get_non_empty_result_from_ch(client, query):
     raise Exception('Result is an empty list')
 
 
-''' This function allows to get data from Chrome DevTools Network tab '''
-
-
 def get_logs_from_network_tab(driver):
+    ''' This function allows to get data from Chrome DevTools Network tab '''
     # Sleeps for 10 seconds
     time.sleep(10)
     # Enable Performance Logging of Chrome.

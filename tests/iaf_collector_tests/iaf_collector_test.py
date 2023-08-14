@@ -3,7 +3,7 @@ import time
 import pytest
 from utils import get_non_empty_result_from_ch, get_logs_from_network_tab
 from data_bases.queries import *
-from pages.html_first_page import HtmlFirstPage
+from iaf_collector_testing_page.html_first_page import HtmlFirstPage
 from constants import *
 
 LOG_FILE = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'network_log.json')
@@ -50,6 +50,7 @@ class TestIafCollector:
             query_res = get_non_empty_result_from_ch(clickhouse_with_cleaning_raw_events_table, SELECT_PAGE_CLOSE)
             assert 'page_close' in query_res[0], "Event_type 'page_close' was not found in DB"
 
+        # НУЖНО ИЗМЕНИТЬ РЕАЛИЗАЦИЮ !!!
         @pytest.mark.skip
         def test_page_opened_in_iframe(self, driver, clickhouse_with_cleaning_raw_events_table):
             test_page = HtmlFirstPage(driver, DEV_2_STAND_URL)

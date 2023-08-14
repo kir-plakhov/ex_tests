@@ -13,7 +13,8 @@ from clickhouse_driver import Client
 def driver():
     desired_capabilities = DesiredCapabilities.CHROME
     desired_capabilities["goog:loggingPrefs"] = {"performance": "ALL"}
-    driver = webdriver.Chrome(ChromeDriverManager().install(), desired_capabilities=desired_capabilities)
+    # driver = webdriver.Chrome(ChromeDriverManager().install(), desired_capabilities=desired_capabilities)
+    driver = webdriver.Chrome(executable_path=ChromeDriverManager(version="114.0.5735.16").install(), desired_capabilities=desired_capabilities)
     driver.maximize_window()
     yield driver
     driver.quit()
@@ -47,6 +48,3 @@ def driver_firefox():
     driver.maximize_window()
     yield driver
     driver.quit()
-
-
-

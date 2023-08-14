@@ -2,7 +2,7 @@ import pytest
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
 
-from pages.html_first_page import *
+from iaf_collector_testing_page.html_first_page import *
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 

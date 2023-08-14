@@ -1,6 +1,6 @@
 import random
 from selenium.webdriver.common.by import By
-from pages.base_page import BasePage
+from iaf_collector_testing_page.base_page import BasePage
 import time
 import json
 

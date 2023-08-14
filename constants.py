@@ -12,3 +12,4 @@ exchange_user_event_url = f'{base_exchange_api_url}' + 'user_event/'
 # exchange_api url
 exchange_debug_user_event_url = f'{base_exchange_api_url}' + 'debug_user_event/'
 
+

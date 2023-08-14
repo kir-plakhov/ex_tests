@@ -4,7 +4,7 @@ import time
 import pytest
 from utils import get_non_empty_result_from_ch
 from data_bases.queries import *
-from pages.html_first_page import HtmlFirstPage
+from iaf_collector_testing_page.html_first_page import HtmlFirstPage
 from constants import *
 
 
