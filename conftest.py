@@ -48,3 +48,4 @@ def driver_firefox():
     driver.maximize_window()
     yield driver
     driver.quit()
+
